@@ -111,13 +111,13 @@ public class ClienteDao {
        }
    }
    
-   public Cliente Buscarcliente(int dni){
+   public Cliente Buscarcliente(String dni){
        Cliente cl = new Cliente();
        String sql = "SELECT * FROM clientes WHERE dni = ?";
        try {
            con = cn.getConnection();
            ps = con.prepareStatement(sql);
-           ps.setInt(1, dni);
+           ps.setString(1, dni);
            rs = ps.executeQuery();
            if (rs.next()) {
                cl.setId(rs.getInt("id"));
