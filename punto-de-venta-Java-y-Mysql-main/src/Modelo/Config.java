@@ -30,11 +30,11 @@ public class Config {
         this.id = id;
     }
 
-    public String getRuc() {
+    public String getRfc() {
         return rfc;
     }
 
-    public void setRuc(String rfc) {
+    public void setRfc(String rfc) {
         this.rfc = rfc;
     }
 

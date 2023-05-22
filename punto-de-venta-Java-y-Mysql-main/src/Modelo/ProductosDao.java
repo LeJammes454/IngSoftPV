@@ -165,7 +165,7 @@ public class ProductosDao {
             rs = ps.executeQuery();
             if (rs.next()) {
                 conf.setId(rs.getInt("id"));
-                conf.setRuc(rs.getString("rfc"));
+                conf.setRfc(rs.getString("rfc"));
                 conf.setNombre(rs.getString("nombre"));
                 conf.setTelefono(rs.getString("telefono"));
                 conf.setDireccion(rs.getString("direccion"));
@@ -181,7 +181,7 @@ public class ProductosDao {
        String sql = "UPDATE config SET rfc=?, nombre=?, telefono=?, direccion=?, mensaje=? WHERE id=?";
        try {
            ps = con.prepareStatement(sql);
-           ps.setString(1, conf.getRuc());
+           ps.setString(1, conf.getRfc());
            ps.setString(2, conf.getNombre());
            ps.setString(3, conf.getTelefono());
            ps.setString(4, conf.getDireccion());

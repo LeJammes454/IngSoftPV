@@ -167,7 +167,7 @@ public final class Sistema extends javax.swing.JFrame {
     public void ListarConfig() {
         conf = proDao.BuscarDatos();
         txtIdConfig.setText("" + conf.getId());
-        txtRucConfig.setText("" + conf.getRuc());
+        txtRucConfig.setText("" + conf.getRfc());
         txtNombreConfig.setText("" + conf.getNombre());
         txtTelefonoConfig.setText("" + conf.getTelefono());
         txtDireccionConfig.setText("" + conf.getDireccion());
@@ -2174,7 +2174,7 @@ public final class Sistema extends javax.swing.JFrame {
     private void btnActualizarConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarConfigActionPerformed
         // TODO add your handling code here:
         if (!"".equals(txtRucConfig.getText()) || !"".equals(txtNombreConfig.getText()) || !"".equals(txtTelefonoConfig.getText()) || !"".equals(txtDireccionConfig.getText())) {
-            conf.setRuc(txtRucConfig.getText());
+            conf.setRfc(txtRucConfig.getText());
             conf.setNombre(txtNombreConfig.getText());
             conf.setTelefono(txtTelefonoConfig.getText());
             conf.setDireccion(txtDireccionConfig.getText());
@@ -2410,6 +2410,17 @@ public final class Sistema extends javax.swing.JFrame {
                 ActualizarStock();
                 LimpiarTableVenta();
                 LimpiarClienteventa();
+                LabelTotal.setText("----");
+
+                // Acción si se selecciona "Sí"
+                Timer timer = new Timer(3000, e -> {
+                    JOptionPane.getRootFrame().dispose(); // Cerrar el cuadro de diálogo
+                });
+                timer.setRepeats(false); // Para que el temporizador se ejecute solo una vez
+                timer.start();
+
+                // Mostrar el cuadro de diálogo con el mensaje
+                JOptionPane.showMessageDialog(null, "Gracias por su compra");
             } else {
                 JOptionPane.showMessageDialog(null, "Debes buscar un cliente");
             }
@@ -2445,6 +2456,7 @@ public final class Sistema extends javax.swing.JFrame {
     private void btnEliminarventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarventaActionPerformed
         // TODO add your handling code here:
         modelo = (DefaultTableModel) TableVenta.getModel();
+
         modelo.removeRow(TableVenta.getSelectedRow());
         TotalPagar();
         txtCodigoVenta.requestFocus();

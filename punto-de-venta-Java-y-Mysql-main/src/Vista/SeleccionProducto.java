@@ -162,7 +162,6 @@ public class SeleccionProducto extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        txtFiltroTabla.setEditable(false);
         txtFiltroTabla.setBackground(new java.awt.Color(204, 204, 204));
         txtFiltroTabla.setBorder(null);
         txtFiltroTabla.addActionListener(new java.awt.event.ActionListener() {
