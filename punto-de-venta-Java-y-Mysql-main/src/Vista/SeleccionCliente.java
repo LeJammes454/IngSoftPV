@@ -27,9 +27,9 @@ public class SeleccionCliente extends javax.swing.JDialog {
     ClienteDao client = new ClienteDao();
     DefaultTableModel modelo = new DefaultTableModel();
     ButtonGroup buttonGroup = new ButtonGroup();
-    Sistema sm = new Sistema();
+    private Sistema sistema;
 
-    public SeleccionCliente(java.awt.Frame parent, boolean modal) {
+    public SeleccionCliente(java.awt.Frame parent, boolean modal, Sistema sistema) {
         super(parent, modal);
         initComponents();
 
@@ -42,6 +42,12 @@ public class SeleccionCliente extends javax.swing.JDialog {
 
         LimpiarTable();
         ListarCliente();
+
+        this.sistema = sistema;
+    }
+
+    public void setSistema(Sistema sistema) {
+        this.sistema = sistema;
     }
 
     /**
@@ -333,16 +339,15 @@ public class SeleccionCliente extends javax.swing.JDialog {
 
     private void TableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableClienteMouseClicked
         // TODO add your handling code here:
-       
+
         btnAceptar.setEnabled(true);
         int fila = TableCliente.rowAtPoint(evt.getPoint());
         txtid.setText(TableCliente.getValueAt(fila, 0).toString());
         txtbdni.setText(TableCliente.getValueAt(fila, 1).toString());
         txtnombre.setText(TableCliente.getValueAt(fila, 2).toString());
         txttelefono1.setText(TableCliente.getValueAt(fila, 3).toString());
-        
-        
-        
+
+
     }//GEN-LAST:event_TableClienteMouseClicked
 
     private void jRadioIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioIdActionPerformed
@@ -366,7 +371,7 @@ public class SeleccionCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_txtFiltroTablaActionPerformed
 
     private void txtFiltroTablaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroTablaKeyPressed
-          String Criterio = txtFiltroTabla.getText();
+        String Criterio = txtFiltroTabla.getText();
 
         if (jRadioId.isSelected()) {
             filtrarClientesPorId(Criterio);
@@ -378,7 +383,7 @@ public class SeleccionCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_txtFiltroTablaKeyPressed
 
     private void txtFiltroTablaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroTablaKeyTyped
-     
+
     }//GEN-LAST:event_txtFiltroTablaKeyTyped
 
     private void txtbdniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbdniActionPerformed
@@ -418,13 +423,19 @@ public class SeleccionCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_txttelefono1KeyTyped
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        
-        String dni =  txtbdni.getText();
-        
-        sm.recibirDatos(dni);
+
+        String dni = txtbdni.getText();
+
+        enviarDatoAlSistema(dni);
         this.dispose();
-        
+
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void enviarDatoAlSistema(String texto) {
+        if (sistema != null) {
+            sistema.recibirTextoDesdeDialog(texto);
+        }
+    }
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
@@ -433,45 +444,7 @@ public class SeleccionCliente extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                SeleccionCliente dialog = new SeleccionCliente(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableCliente;
     private javax.swing.JButton btnAceptar;
@@ -560,6 +533,7 @@ public class SeleccionCliente extends javax.swing.JDialog {
 
         TableCliente.setModel(modelo);
     }
+
     public void filtrarClientesPorTelefono(String criterio) {
         List<Cliente> listaClientes = client.ListarCliente();
         modelo = (DefaultTableModel) TableCliente.getModel();
@@ -578,4 +552,5 @@ public class SeleccionCliente extends javax.swing.JDialog {
 
         TableCliente.setModel(modelo);
     }
+
 }
