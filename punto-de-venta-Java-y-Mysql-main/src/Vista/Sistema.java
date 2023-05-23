@@ -8,6 +8,7 @@ package Vista;
 import Modelo.Cliente;
 import Modelo.ClienteDao;
 import Modelo.Combo;
+import Modelo.Conexion;
 import Modelo.Config;
 import Modelo.Detalle;
 import Modelo.Eventos;
@@ -51,6 +52,7 @@ public final class Sistema extends javax.swing.JFrame {
     LoginDAO login = new LoginDAO();
     DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel tmp = new DefaultTableModel();
+    
     String nombre;
     int item;
     double Totalpagar = 0.00;
@@ -61,7 +63,6 @@ public final class Sistema extends javax.swing.JFrame {
 
     public Sistema(login priv) {
         initComponents();
-
         this.setLocationRelativeTo(null);
         Midate.setDate(fechaVenta);
         txtIdCliente.setVisible(false);
@@ -348,7 +349,6 @@ public final class Sistema extends javax.swing.JFrame {
         txtIdVenta = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jLabel32 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         txtIdConfig = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
@@ -369,6 +369,7 @@ public final class Sistema extends javax.swing.JFrame {
         jPanel45 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jPanel40 = new javax.swing.JPanel();
+        jLabel42 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         jLabel34 = new javax.swing.JLabel();
@@ -475,8 +476,8 @@ public final class Sistema extends javax.swing.JFrame {
 
         btnConfig.setBackground(new java.awt.Color(150, 215, 235));
         btnConfig.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/config.png"))); // NOI18N
-        btnConfig.setText("Config");
+        btnConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/informacion.png"))); // NOI18N
+        btnConfig.setText("Info Empresa");
         btnConfig.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnConfig.setFocusable(false);
         btnConfig.addActionListener(new java.awt.event.ActionListener() {
@@ -1775,10 +1776,6 @@ public final class Sistema extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel32.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel32.setText("DATOS DE LA EMPRESA");
-        jPanel7.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, -1));
-
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel8.add(txtIdConfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 24, -1));
 
@@ -1911,10 +1908,10 @@ public final class Sistema extends javax.swing.JFrame {
 
         jPanel8.add(jPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, 220, 2));
 
-        jPanel7.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 610, 390));
+        jPanel7.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 440, 390));
 
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/empresa-removebg-preview.png"))); // NOI18N
-        jPanel7.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 150, 410, 290));
+        jPanel7.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 320, 410, 290));
 
         javax.swing.GroupLayout jPanel40Layout = new javax.swing.GroupLayout(jPanel40);
         jPanel40.setLayout(jPanel40Layout);
@@ -1928,6 +1925,10 @@ public final class Sistema extends javax.swing.JFrame {
         );
 
         jPanel7.add(jPanel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, 10));
+
+        jLabel42.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel42.setText("DATOS DE LA EMPRESA");
+        jPanel7.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, -1));
 
         jTabbedPane1.addTab("6", jPanel7);
 
@@ -2876,7 +2877,6 @@ public final class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
@@ -2887,6 +2887,7 @@ public final class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 public class Conexion {
 
     Connection con;
+    
 
     public Connection getConnection() {
         
