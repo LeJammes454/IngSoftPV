@@ -51,8 +51,7 @@ public final class Sistema extends javax.swing.JFrame {
     LoginDAO login = new LoginDAO();
     DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel tmp = new DefaultTableModel();
-    ImageIcon asistente = new ImageIcon(this.getClass().getClassLoader().getResource("img/asistente.png"));
-
+    String nombre;
     int item;
     double Totalpagar = 0.00;
 
@@ -75,11 +74,11 @@ public final class Sistema extends javax.swing.JFrame {
         btnEliminarventa.setEnabled(false);
         btnEliminarCarrito.setEnabled(false);
         ListarConfig();
+        nombre= priv.getNombre();
         if (priv.getRol().equals("Asistente")) {
             btnProductos.setEnabled(false);
             btnProveedor.setEnabled(false);
             LabelVendedor.setText(priv.getNombre());
-            imgTipoPersona.setIcon(asistente);
         } else {
             LabelVendedor.setText(priv.getNombre());
         }
@@ -2750,7 +2749,7 @@ public final class Sistema extends javax.swing.JFrame {
             timer.start();
 
             // Mostrar el cuadro de diálogo con el mensaje
-            JOptionPane.showMessageDialog(null, "Adios");
+            JOptionPane.showMessageDialog(null, "Adios \n" + nombre );
 
         } else {
             // Acción si se selecciona "No"
