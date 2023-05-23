@@ -19,7 +19,6 @@ import Modelo.ProveedorDao;
 import Modelo.Venta;
 import Modelo.VentaDao;
 import Modelo.login;
-import Reportes.Grafico;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
@@ -28,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -72,6 +72,8 @@ public final class Sistema extends javax.swing.JFrame {
         txtIdProveedor.setVisible(false);
         txtIdConfig.setVisible(false);
         txtIdCV.setVisible(false);
+        btnEliminarventa.setEnabled(false);
+        btnEliminarCarrito.setEnabled(false);
         ListarConfig();
         if (priv.getRol().equals("Asistente")) {
             btnProductos.setEnabled(false);
@@ -265,6 +267,7 @@ public final class Sistema extends javax.swing.JFrame {
         txtIdCV = new javax.swing.JTextField();
         jPanel22 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        btnEliminarCarrito = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -603,7 +606,7 @@ public final class Sistema extends javax.swing.JFrame {
         jPanel2.add(txtIdPro, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, -1, -1));
 
         Midate.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.add(Midate, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 10, 260, 40));
+        jPanel2.add(Midate, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 10, 260, 30));
 
         jPanel14.setBackground(new java.awt.Color(0, 110, 255));
 
@@ -772,16 +775,11 @@ public final class Sistema extends javax.swing.JFrame {
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel53, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel55, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel53, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel55, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(11, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -814,6 +812,11 @@ public final class Sistema extends javax.swing.JFrame {
                 "ID", "DESCRIPCIÓN", "CANTIDAD", "PRECIO U.", "PRECIO TOTAL"
             }
         ));
+        TableVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableVentaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TableVenta);
         if (TableVenta.getColumnModel().getColumnCount() > 0) {
             TableVenta.getColumnModel().getColumn(0).setPreferredWidth(60);
@@ -834,10 +837,10 @@ public final class Sistema extends javax.swing.JFrame {
         );
         jPanel20Layout.setVerticalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
         );
 
-        jPanel2.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 890, 390));
+        jPanel2.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 890, 370));
 
         jPanel23.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agregar Producto", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
@@ -1082,6 +1085,14 @@ public final class Sistema extends javax.swing.JFrame {
         );
 
         jPanel2.add(jPanel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, -1, 140));
+
+        btnEliminarCarrito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar_carrito.png"))); // NOI18N
+        btnEliminarCarrito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarCarritoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnEliminarCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 60, 50, 40));
 
         jTabbedPane1.addTab("1", jPanel2);
 
@@ -2455,11 +2466,27 @@ public final class Sistema extends javax.swing.JFrame {
 
     private void btnEliminarventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarventaActionPerformed
         // TODO add your handling code here:
-        modelo = (DefaultTableModel) TableVenta.getModel();
 
-        modelo.removeRow(TableVenta.getSelectedRow());
-        TotalPagar();
-        txtCodigoVenta.requestFocus();
+        // Obtener el modelo de selección de la tabla
+        ListSelectionModel selectionModel = TableVenta.getSelectionModel();
+
+        // Verificar si hay alguna fila seleccionada
+        if (!selectionModel.isSelectionEmpty()) {
+            // Activar el boton pára eliminar
+            // Imprimir el valor seleccionado
+            System.out.println("Elemento seleccionado: " );
+
+            modelo = (DefaultTableModel) TableVenta.getModel();
+
+            modelo.removeRow(TableVenta.getSelectedRow());
+            TotalPagar();
+            
+            btnEliminarventa.setEnabled(false);
+            txtCodigoVenta.requestFocus();
+        } else {
+            System.out.println("Ningún elemento seleccionado.");
+        }
+
     }//GEN-LAST:event_btnEliminarventaActionPerformed
 
     private void txtDescripcionVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionVentaKeyTyped
@@ -2614,6 +2641,7 @@ public final class Sistema extends javax.swing.JFrame {
                     LimparVenta();
                     txtCodigoVenta.requestFocus();
                     txtStockDisponiblev2.setText("");
+                    btnEliminarCarrito.setEnabled(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Stock no disponible");
                 }
@@ -2688,6 +2716,7 @@ public final class Sistema extends javax.swing.JFrame {
                 LimparVenta();
                 txtCodigoVenta.requestFocus();
                 txtStockDisponiblev2.setText("");
+                btnEliminarCarrito.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Stock no disponible");
             }
@@ -2728,6 +2757,15 @@ public final class Sistema extends javax.swing.JFrame {
             System.out.println("Se seleccionó 'No'");
         }
     }//GEN-LAST:event_btnAcercaMouseClicked
+
+    private void TableVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableVentaMouseClicked
+          btnEliminarventa.setEnabled(true);
+    }//GEN-LAST:event_TableVentaMouseClicked
+
+    private void btnEliminarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCarritoActionPerformed
+        LimparVenta();
+        btnEliminarCarrito.setEnabled(false);
+    }//GEN-LAST:event_btnEliminarCarritoActionPerformed
 
     private void abrirSeleccionCliente() {
         SeleccionCliente seleccionCliente = new SeleccionCliente(this, true, this);
@@ -2791,6 +2829,7 @@ public final class Sistema extends javax.swing.JFrame {
     private javax.swing.JButton btnEditarCliente;
     private javax.swing.JButton btnEditarProveedor;
     private javax.swing.JButton btnEditarpro;
+    private javax.swing.JButton btnEliminarCarrito;
     private javax.swing.JButton btnEliminarCliente;
     private javax.swing.JButton btnEliminarPro;
     private javax.swing.JButton btnEliminarProveedor;
