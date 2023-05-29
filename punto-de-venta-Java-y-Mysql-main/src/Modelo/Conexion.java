@@ -12,7 +12,6 @@ public class Conexion {
 
     public Connection getConnection() {
         
-        
         try {
             String myBD = "jdbc:mysql://localhost:3306/abarrote?serverTimezone=UTC";
             con = DriverManager.getConnection(myBD, "root", "jaime0454");
